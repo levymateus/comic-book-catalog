@@ -10,13 +10,17 @@ const TopNavbar: React.FC = () => {
   const dispatch = useDispatch();
 
   const handleSearch = async (search: string): Promise<void> => {
-    const character = await fetchCharacter({
-      name: search,
-      nameStartsWith: search,
-    });
-    if (character.data.results.length) {
-      const characters = character.data.results.map((char) => char.id).join(',');
-      dispatch(fetchComics({ limit: 100, offset: 0, characters }));
+    if (search) {
+      const character = await fetchCharacter({
+        name: search,
+        nameStartsWith: search,
+      });
+      if (character.data.results.length) {
+        const characters = character.data.results.map((char) => char.id).join(',');
+        dispatch(fetchComics({ limit: 100, offset: 0, characters }));
+      } else {
+        dispatch(resetComics());
+      }
     } else {
       dispatch(resetComics());
     }
