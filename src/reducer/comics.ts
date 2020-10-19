@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
 import {
-  ComicsActionTypes, ComicsState, FETCH_COMICS, PAGINATE_COMICS, PUT_COMICS,
+  ComicsActionTypes, ComicsState, FETCH_COMICS, PAGINATE_COMICS, PUT_COMICS, RESET_COMICS,
 } from '../store/comics/types';
 
 const initialState: ComicsState = {
@@ -19,6 +19,14 @@ const initialState: ComicsState = {
 
 const comics = (state: ComicsState = initialState, action: ComicsActionTypes) => {
   switch (action.type) {
+    case RESET_COMICS:
+      return {
+        ...initialState,
+        query: {
+          ...state.query,
+          characters: state.query.characters,
+        },
+      };
     case FETCH_COMICS:
       return {
         ...state,

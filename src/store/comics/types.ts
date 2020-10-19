@@ -2,6 +2,7 @@
 export const FETCH_COMICS = 'FETCH_COMICS';
 export const PUT_COMICS = 'PUT_COMICS';
 export const PAGINATE_COMICS = 'PAGINATE_COMICS';
+export const RESET_COMICS = 'RESET_COMICS';
 
 export interface Comic {
   id: number;
@@ -50,4 +51,8 @@ interface PutComics {
   comics: Comic[];
 }
 
-export type ComicsActionTypes = FetchComics | PutComics | Paginate
+interface ResetComics {
+  type: typeof RESET_COMICS;
+}
+
+export type ComicsActionTypes = FetchComics | PutComics | Paginate | ResetComics;

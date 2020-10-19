@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Pagging from '../../components/pagging';
 import Thumbnail from '../../components/thumbnail';
 import { fetchComics, paginateComics } from '../../store/comics/actions';
-
 import rootStore from '../../store';
 
 import './index.css';

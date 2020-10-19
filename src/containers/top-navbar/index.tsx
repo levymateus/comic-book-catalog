@@ -4,7 +4,7 @@ import { fetchCharacter } from '../../api';
 
 import Navbar from '../../components/navbar';
 import Search from '../../components/search';
-import { fetchComics } from '../../store/comics/actions';
+import { fetchComics, resetComics } from '../../store/comics/actions';
 
 const TopNavbar: React.FC = () => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const TopNavbar: React.FC = () => {
       const characters = character.data.results.map((char) => char.id).join(',');
       dispatch(fetchComics({ limit: 100, offset: 0, characters }));
     } else {
-      console.warn('nenhum resultado');
+      dispatch(resetComics());
     }
   };
 
