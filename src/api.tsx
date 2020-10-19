@@ -8,7 +8,7 @@ const api = axios.create({
   params: {
     apikey: PUBLIC_KEY,
   },
-  timeout: 10000,
+  timeout: 60000,
   method: 'get',
   responseType: 'json',
 });
