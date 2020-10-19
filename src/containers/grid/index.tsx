@@ -13,7 +13,8 @@ type ResultSet = {
   length: number,
   pages: number,
   isLoading: boolean,
-  count: number
+  count: number,
+  page: number,
   query: {
     characters: string,
   }
@@ -52,15 +53,16 @@ const select = (store: any): ResultSet => {
     isLoading,
     count,
     query,
+    page,
   };
 };
 
 const Grid: React.FC = () => {
   const dispatch = useDispatch();
   const {
-    grid, pages, isLoading,
+    page, grid, pages, isLoading,
   } = useSelector<any, ResultSet>(select);
-  const [page, setPage] = useState(0);
+  const [selectedPage, setSelectedPage] = useState(0);
 
   useEffect(() => {
     dispatch(fetchComics({
@@ -69,6 +71,8 @@ const Grid: React.FC = () => {
       characters: '',
     }));
   }, [dispatch]);
+
+  useEffect(() => { setSelectedPage(page); }, [page]);
 
   return (
     <div className="grid">
@@ -92,12 +96,12 @@ const Grid: React.FC = () => {
 
       <div className="fixed-bottom d-flex justify-content-center">
         <Pagging
-          page={page}
+          page={selectedPage}
           pages={pages}
           onChange={(nextPage) => {
             const limit = ROWS * COLUMNS;
             const { comics } = rootStore.getState();
-            setPage(nextPage);
+            setSelectedPage(nextPage);
 
             if (!comics.comics[nextPage]) {
               dispatch(fetchComics({
