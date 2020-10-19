@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, {
-  useState, useEffect, useMemo, useCallback, HTMLAttributes,
+  useState, useEffect, useCallback, HTMLAttributes,
 } from 'react';
 
 import './index.css';
@@ -11,7 +11,7 @@ interface Props extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
   onChange: (page: number) => void;
 }
 
-const initialState = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const initialState = [0, 1, 2];
 
 const Pagging: React.FC<Props> = ({
   page, pages, onChange, className,
@@ -22,33 +22,38 @@ const Pagging: React.FC<Props> = ({
 
   const onChangeCallback = useCallback(onChange, []);
 
-  const pagesList = useMemo(() => [
-    ...list.map((value) => (
-      <li
-        key={`pagging-${value.toString()}`}
-        className={`page-item ${value === page ? 'active' : ''}`}
-      >
-        <button
-          type="button"
-          className="page-link"
-          onClick={(event) => {
-            event.preventDefault();
-            onChangeCallback(value);
-          }}
-        >
-          {(value + 1).toString()}
-          {value === page && <span className="sr-only">(current)</span>}
-        </button>
-      </li>
-    )),
-  ], [list, page, onChangeCallback]);
+  const pagesList = useCallback(() => [
+    ...list.map((value) => {
+      if (value < pages) {
+        return (
+          <li
+            key={`pagging-${value.toString()}`}
+            className={`page-item ${value === page ? 'active' : ''}`}
+          >
+            <button
+              type="button"
+              className="page-link"
+              onClick={(event) => {
+                event.preventDefault();
+                onChangeCallback(value);
+              }}
+            >
+              {(value + 1).toString()}
+              {value === page && <span className="sr-only">(current)</span>}
+            </button>
+          </li>
+        );
+      }
+      return null;
+    }),
+  ], [list, pages, page, onChangeCallback]);
 
   useEffect(() => {
     if (page >= lastPageValue && page < pages) {
-      setList((prevList) => [...prevList.map((_, index) => (lastPageValue + index) - 5),
+      setList((prevList) => [...prevList.map((_, index) => (lastPageValue + index)),
       ]);
-    } else if (page <= firstPageValue && firstPageValue > 0) {
-      setList((prevList) => [...prevList.map((_, index) => (firstPageValue + index) - 5),
+    } else if (page <= firstPageValue && firstPageValue > 0 && (page + 1) < pages) {
+      setList((prevList) => [...prevList.map((_, index) => (firstPageValue + index)),
       ]);
     }
   }, [page, pages, setList, lastPageValue, firstPageValue]);
@@ -71,15 +76,15 @@ const Pagging: React.FC<Props> = ({
             <span aria-hidden="true">&laquo;</span>
           </button>
         </li>
-        {pagesList}
-        <li className={`page-item ${page === pages ? 'disabled' : ''}`}>
+        {pagesList()}
+        <li className={`page-item ${(page + 1) === pages ? 'disabled' : ''}`}>
           <button
             type="button"
             className="page-link"
             aria-label="Next"
             onClick={(event) => {
               event.preventDefault();
-              if (page + 1 < pages) {
+              if (page + 1 <= pages) {
                 onChangeCallback(page + 1);
               }
             }}

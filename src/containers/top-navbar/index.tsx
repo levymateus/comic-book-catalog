@@ -22,7 +22,7 @@ const TopNavbar: React.FC = () => {
         dispatch(resetComics());
       }
     } else {
-      dispatch(resetComics());
+      dispatch(fetchComics({ limit: 100, offset: 0 }));
     }
   };
 

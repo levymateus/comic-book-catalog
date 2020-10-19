@@ -94,10 +94,11 @@ const Grid: React.FC = () => {
         </div>
       )) : <p>loading...</p>}
 
+      {pages > 0 && isLoading === false && (
       <div className="fixed-bottom d-flex justify-content-center">
         <Pagging
           page={selectedPage}
-          pages={pages}
+          pages={Math.floor(pages)}
           onChange={(nextPage) => {
             const limit = ROWS * COLUMNS;
             const { comics } = rootStore.getState();
@@ -119,6 +120,7 @@ const Grid: React.FC = () => {
           }}
         />
       </div>
+      )}
 
     </div>
   );
