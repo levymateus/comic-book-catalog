@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Pagging from '../../components/pagging';
 import Thumbnail from '../../components/thumbnail';
 import { fetchComics, paginateComics } from '../../store/comics/actions';
+
+import rootStore from '../../store';
 
 import './index.css';
 
@@ -11,8 +13,7 @@ type ResultSet = {
   length: number,
   pages: number,
   isLoading: boolean,
-  count: number,
-  page: number,
+  count: number
   query: {
     characters: string,
   }
@@ -51,16 +52,15 @@ const select = (store: any): ResultSet => {
     isLoading,
     count,
     query,
-    page,
   };
 };
 
 const Grid: React.FC = () => {
   const dispatch = useDispatch();
-  const comics = useSelector<any, any[]>((store: any) => store.comics.comics);
   const {
-    page, grid, pages, isLoading, query,
+    grid, pages, isLoading,
   } = useSelector<any, ResultSet>(select);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     dispatch(fetchComics({
@@ -94,20 +94,22 @@ const Grid: React.FC = () => {
         <Pagging
           page={page}
           pages={pages}
-          className={`${isLoading ? 'invisible' : 'visible'}`}
           onChange={(nextPage) => {
             const limit = ROWS * COLUMNS;
-            if (!comics[nextPage]) {
+            const { comics } = rootStore.getState();
+            setPage(nextPage);
+
+            if (!comics.comics[nextPage]) {
               dispatch(fetchComics({
                 limit,
                 offset: limit * nextPage,
-                characters: query.characters,
+                characters: comics.query.characters,
               }));
             } else {
               dispatch(paginateComics({
                 limit,
                 offset: limit * nextPage,
-                characters: query.characters,
+                characters: comics.query.characters,
               }));
             }
           }}

@@ -8,7 +8,7 @@ const initialState: ComicsState = {
     limit: 100,
     offset: 0,
     total: 0,
-    count: 0,
+    count: 1,
   },
   comics: [],
   isLoading: false,
