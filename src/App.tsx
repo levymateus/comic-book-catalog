@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import './index.css';
 import './app.css';
@@ -10,7 +11,16 @@ const App: React.FC = () => (
   <div className="app container-fluid">
     <TopNavbar />
     <MetaSearchData />
-    <Grid />
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Grid />
+        </Route>
+        <Route exact path="/comics">
+          <Grid />
+        </Route>
+      </Switch>
+    </Router>
   </div>
 );
 
