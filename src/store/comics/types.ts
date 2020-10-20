@@ -27,6 +27,7 @@ export interface Query {
   limit: number;
   offset: number;
   characters?: string;
+  dateRange?: string;
 }
 
 export interface Paginate {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import formatISO from 'date-fns/formatISO';
+import subYears from 'date-fns/subYears';
 
 import Pagging from '../../components/pagging';
 import Thumbnail from '../../components/thumbnail';
@@ -65,10 +67,13 @@ const Grid: React.FC = () => {
   const [selectedPage, setSelectedPage] = useState(0);
 
   useEffect(() => {
+    const now = new Date();
+    const dateRange = [formatISO(subYears(now, 2), { representation: 'date' }), formatISO(now, { representation: 'date' })];
     dispatch(fetchComics({
       limit: ROWS * COLUMNS,
       offset: 0,
       characters: '',
+      dateRange: dateRange.join(','),
     }));
   }, [dispatch]);
 
