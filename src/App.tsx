@@ -7,7 +7,7 @@ import Grid from './containers/grid';
 import MetaSearchData from './containers/meta-search';
 
 const App: React.FC = () => (
-  <div id="container" className="app">
+  <div className="app container-fluid">
     <TopNavbar />
     <MetaSearchData />
     <Grid />

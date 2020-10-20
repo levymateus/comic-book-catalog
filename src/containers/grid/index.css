@@ -1,3 +1,11 @@
 .grid {
 	padding: 32px;
+	align-items: center;
+}
+
+.wrap-grid {
+	width: 100%;
+	height: calc(100% - 56px);
+	display: flex;
+	justify-content: center;
 }

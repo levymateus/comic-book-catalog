@@ -1,4 +1,7 @@
 import React, { HTMLAttributes, useRef } from 'react';
+import { SearchIcon } from '../icons';
+
+import './index.css';
 
 interface Props extends HTMLAttributes<HTMLElement>{
   // eslint-disable-next-line no-unused-vars
@@ -9,26 +12,25 @@ const Search: React.FC<Props> = ({ handleSubmit, className }) => {
   const inputRef = useRef<HTMLInputElement>();
   return (
     <form
-      className={`form-inline my-2 my-lg-0 ${className || ''}`}
+      className={`search-form form-inline my-2 my-lg-0 ${className || ''}`}
       onSubmit={(event) => {
         event.preventDefault();
         handleSubmit(inputRef.current.value);
       }}
     >
-      <input
-        className="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-        name="search"
-        ref={inputRef}
-      />
-      <button
-        className="btn btn-outline-success my-2 my-sm-0"
-        type="submit"
-      >
-        Search
-      </button>
+      <div className="search-form-container input-group">
+        <input
+          className="form-control"
+          type="search"
+          placeholder="Search by character name"
+          aria-label="Search"
+          name="search"
+          ref={inputRef}
+        />
+        <div className="input-group-append">
+          <button className="btn btn-primary" type="button" id="button-addon2"> <SearchIcon /></button>
+        </div>
+      </div>
     </form>
   );
 };

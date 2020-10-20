@@ -50,10 +50,10 @@ const Pagging: React.FC<Props> = ({
 
   useEffect(() => {
     if (page >= lastPageValue && page < pages) {
-      setList((prevList) => [...prevList.map((_, index) => (lastPageValue + index)),
+      setList((prevList) => [...prevList.map((_, index) => (lastPageValue + index) - 1),
       ]);
     } else if (page <= firstPageValue && firstPageValue > 0 && (page + 1) < pages) {
-      setList((prevList) => [...prevList.map((_, index) => (firstPageValue + index)),
+      setList((prevList) => [...prevList.map((_, index) => (firstPageValue + index) - 1),
       ]);
     }
   }, [page, pages, setList, lastPageValue, firstPageValue]);

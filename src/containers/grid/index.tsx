@@ -80,7 +80,7 @@ const Grid: React.FC = () => {
   useEffect(() => { setSelectedPage(page); }, [page]);
 
   return (
-    <div className="grid">
+    <div className={`${isLoading ? 'grid wrap-grid' : 'grid'}`}>
 
       {isLoading === false ? grid.map((row, index) => (
         <div key={`row-${index.toString()}`} className="row">
@@ -90,14 +90,20 @@ const Grid: React.FC = () => {
                 title={col.title}
                 alt={col.title}
                 url={col.thumbnail.path}
-                variant="portrait_medium"
+                variant="portrait_xlarge"
                 extension={col.thumbnail.extension}
                 creators={col.creators.items}
               />
             </div>
           ))}
         </div>
-      )) : <p>loading...</p>}
+      )) : (
+        <div className="d-flex justify-content-center">
+          <div className="spinner-grow" role="status">
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      )}
 
       {pages > 0 && isLoading === false && (
       <div className="fixed-bottom d-flex justify-content-center">
@@ -126,7 +132,6 @@ const Grid: React.FC = () => {
         />
       </div>
       )}
-
     </div>
   );
 };
