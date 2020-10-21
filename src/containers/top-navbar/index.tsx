@@ -1,13 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchCharacter } from '../../api';
+import { useHistory } from 'react-router';
 
+import { fetchCharacter } from '../../api';
 import Navbar from '../../components/navbar';
 import Search from '../../components/search';
-import { fetchComics, resetComics } from '../../store/comics/actions';
+import { resetComics } from '../../store/comics/actions';
 
 const TopNavbar: React.FC = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSearch = async (search: string): Promise<void> => {
     if (search) {
@@ -17,12 +19,12 @@ const TopNavbar: React.FC = () => {
       });
       if (character.data.results.length) {
         const characters = character.data.results.map((char) => char.id).join(',');
-        dispatch(fetchComics({ limit: 100, offset: 0, characters }));
+        history.replace(`/comics/${characters}`);
       } else {
         dispatch(resetComics());
       }
     } else {
-      dispatch(fetchComics({ limit: 100, offset: 0 }));
+      history.replace('/comics/');
     }
   };
 

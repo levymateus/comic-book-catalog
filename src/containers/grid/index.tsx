@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import formatISO from 'date-fns/formatISO';
 import subYears from 'date-fns/subYears';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import Pagging from '../../components/pagging';
 import Thumbnail from '../../components/thumbnail';
@@ -61,6 +61,7 @@ const select = (store: any): ResultSet => {
 };
 
 const Grid: React.FC = () => {
+  const { characters } = useParams<{ characters: string }>();
   const dispatch = useDispatch();
   const {
     page, grid, pages, isLoading,
@@ -69,15 +70,25 @@ const Grid: React.FC = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const now = new Date();
-    const dateRange = [formatISO(subYears(now, 2), { representation: 'date' }), formatISO(now, { representation: 'date' })];
-    dispatch(fetchComics({
-      limit: ROWS * COLUMNS,
-      offset: 0,
-      characters: '',
-      dateRange: dateRange.join(','),
-    }));
-  }, [dispatch]);
+    if (characters) {
+      dispatch(fetchComics({
+        limit: ROWS * COLUMNS,
+        offset: 0,
+        characters,
+      }));
+    } else {
+      const now = new Date();
+      const start = formatISO(subYears(now, 2), { representation: 'date' });
+      const end = formatISO(now, { representation: 'date' });
+      const dateRange = [start, end];
+      dispatch(fetchComics({
+        limit: ROWS * COLUMNS,
+        offset: 0,
+        characters: '',
+        dateRange: dateRange.join(','),
+      }));
+    }
+  }, [dispatch, characters]);
 
   useEffect(() => { setSelectedPage(page); }, [page]);
 
@@ -95,7 +106,7 @@ const Grid: React.FC = () => {
                 variant="portrait_xlarge"
                 extension={col.thumbnail.extension}
                 creators={col.creators.items}
-                onClick={(): void => history.push(`comic/${col.id}`)}
+                onClick={(): void => history.replace(`/comic/${col.id}`)}
               />
             </div>
           ))}
