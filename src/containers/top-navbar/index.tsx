@@ -30,7 +30,8 @@ const TopNavbar: React.FC = () => {
 
   return (
     <Navbar fixedTop variant="dark">
-      <div className="full-width d-flex justify-content-center">
+      <a className="navbar-brand" href="/">Marvel comics</a>
+      <div className="search-width d-flex justify-content-center">
         <Search handleSubmit={handleSearch} />
       </div>
     </Navbar>
