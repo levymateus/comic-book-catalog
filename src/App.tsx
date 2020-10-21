@@ -5,7 +5,7 @@ import './index.css';
 import './app.css';
 import { Redirect } from 'react-router';
 import TopNavbar from './containers/top-navbar';
-import Grid from './containers/grid';
+import Comics from './containers/comics';
 import MetaSearchData from './containers/meta-search';
 import Comic from './containers/comic';
 
@@ -16,12 +16,11 @@ const App: React.FC = () => (
       <Switch>
         <Route exact path="/comics">
           <MetaSearchData />
-          <Grid />
+          <Comics />
         </Route>
         <Route exact path="/comics/:characters">
           <MetaSearchData />
-          <Grid />
-          <div>teste</div>
+          <Comics />
         </Route>
         <Route exact path="/comic/:id">
           <Comic />

@@ -96,7 +96,7 @@ const Comic: React.FC = () => {
               <div className="row row-cols-2 py-4">
 
                 {comic.creators.items.map((creator) => (
-                  <div className="col py-4">
+                  <div key={creator.name} className="col py-4">
                     <h4 className="text-capitalize">{creator.role}:</h4>
                     <h5>{creator.name}</h5>
                   </div>

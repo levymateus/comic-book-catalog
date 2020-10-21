@@ -60,7 +60,7 @@ const select = (store: any): ResultSet => {
   };
 };
 
-const Grid: React.FC = () => {
+const Comics: React.FC = () => {
   const { characters } = useParams<{ characters: string }>();
   const dispatch = useDispatch();
   const {
@@ -150,4 +150,4 @@ const Grid: React.FC = () => {
   );
 };
 
-export default Grid;
+export default Comics;
