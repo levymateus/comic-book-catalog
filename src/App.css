@@ -7,3 +7,10 @@
 .full-width {
 	width: 100%;
 }
+
+.wrap {
+	width: 100%;
+	height: calc(100% - 56px);
+	display: flex;
+	justify-content: center;
+}

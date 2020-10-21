@@ -12,6 +12,7 @@ const Search: React.FC<Props> = ({ handleSubmit, className }) => {
   const inputRef = useRef<HTMLInputElement>();
   return (
     <form
+      id="search-form"
       className={`search-form form-inline my-2 my-lg-0 ${className || ''}`}
       onSubmit={(event) => {
         event.preventDefault();
@@ -28,7 +29,7 @@ const Search: React.FC<Props> = ({ handleSubmit, className }) => {
           ref={inputRef}
         />
         <div className="input-group-append">
-          <button className="btn btn-primary" type="button" id="button-addon2"> <SearchIcon /></button>
+          <button className="btn btn-primary" type="submit" id="button-addon2" form="search-form"> <SearchIcon /></button>
         </div>
       </div>
     </form>

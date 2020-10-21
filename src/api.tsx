@@ -19,6 +19,12 @@ export const fetchComics = async (params: any): Promise<any> => {
   return response.data;
 };
 
+export const getComic = async (comicId: string): Promise<any> => {
+  const url = `/v1/public/comics/${comicId}`;
+  const response = await api.get(url);
+  return response.data;
+};
+
 export const fetchCharacter = async (params: any): Promise<any> => {
   const url = '/v1/public/characters';
   const response = await api.get(url, { params });

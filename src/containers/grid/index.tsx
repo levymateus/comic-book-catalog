@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import formatISO from 'date-fns/formatISO';
 import subYears from 'date-fns/subYears';
+import { useHistory } from 'react-router';
 
 import Pagging from '../../components/pagging';
 import Thumbnail from '../../components/thumbnail';
@@ -65,6 +66,7 @@ const Grid: React.FC = () => {
     page, grid, pages, isLoading,
   } = useSelector<any, ResultSet>(select);
   const [selectedPage, setSelectedPage] = useState(0);
+  const history = useHistory();
 
   useEffect(() => {
     const now = new Date();
@@ -80,7 +82,7 @@ const Grid: React.FC = () => {
   useEffect(() => { setSelectedPage(page); }, [page]);
 
   return (
-    <div className={`${isLoading ? 'grid wrap-grid' : 'grid'}`}>
+    <div className={`${isLoading ? 'grid wrap' : 'grid'}`}>
 
       {isLoading === false ? grid.map((row, index) => (
         <div key={`row-${index.toString()}`} className="row">
@@ -93,6 +95,7 @@ const Grid: React.FC = () => {
                 variant="portrait_xlarge"
                 extension={col.thumbnail.extension}
                 creators={col.creators.items}
+                onClick={(): void => history.push(`comic/${col.id}`)}
               />
             </div>
           ))}

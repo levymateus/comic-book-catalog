@@ -28,6 +28,7 @@ export interface Query {
   offset: number;
   characters?: string;
   dateRange?: string;
+  comicId?: string;
 }
 
 export interface Paginate {

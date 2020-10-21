@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useState } from 'react';
 
 import './index.css';
 
@@ -8,7 +8,7 @@ interface Creator {
   role: string;
 }
 
-interface Props {
+interface Props extends HTMLAttributes<HTMLImageElement> {
   title: string;
   url: string;
   alt: string;
@@ -28,7 +28,7 @@ interface Props {
 }
 
 const Thumbnail: React.FC<Props> = ({
-  title, url, alt, variant, extension, creators,
+  title, url, alt, variant, extension, creators, ...rest
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -51,6 +51,8 @@ const Thumbnail: React.FC<Props> = ({
     <div className="thumbnail">
       <div className="thumbnail-container ">
         <img
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...rest}
           onLoad={() => setIsLoading(false)}
           src={`${url}/${variant}.${extension}`}
           alt={alt}
