@@ -125,7 +125,10 @@ const Comics: React.FC = () => {
       )}
 
       {pages > 0 && isLoading === false && (
-      <div className="fixed-bottom d-flex justify-content-center">
+      <div className="fixed-bottom d-flex justify-content-center footer">
+        <div className="data-provided">
+          <a href="http://marvel.com">Data provided by Marvel. © 2020 MARVEL</a>
+        </div>
         <Pagging
           page={selectedPage}
           pages={Math.floor(pages)}
