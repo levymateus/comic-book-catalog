@@ -12,6 +12,7 @@ import rootStore from '../../store';
 import './index.css';
 import Error from '../error';
 import { NotFound } from '../../components/not-found';
+import DataProvider from '../../components/data-provider';
 
 type ResultSet = {
   grid: any[][],
@@ -133,11 +134,11 @@ const Comics: React.FC = () => {
       </div>
       )}
 
-      {pages > 0 && isLoading === false && (
       <div className="fixed-bottom d-flex justify-content-center footer">
-        <div className="data-provided">
+        <DataProvider>
           <a href="http://marvel.com">Data provided by Marvel. © 2020 MARVEL</a>
-        </div>
+        </DataProvider>
+        {pages > 0 && isLoading === false && (
         <Pagging
           page={selectedPage}
           pages={Math.floor(pages)}
@@ -161,8 +162,9 @@ const Comics: React.FC = () => {
             }
           }}
         />
+        )}
       </div>
-      )}
+
     </div>
   );
 };

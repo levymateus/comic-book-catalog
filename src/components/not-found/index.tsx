@@ -14,9 +14,9 @@ export const NotFound: React.FC = () => (
 );
 
 export const NotFoundPage: React.FC = () => (
-  <div className="d-flex justify-content-center">
+  <div className="page-not-found d-flex justify-content-center align-items-center">
     <div className="no-results-box">
-      <h2>404 - Sorry! Page Not Found</h2>
+      <h2>404 - Sorry, page Not Found :(</h2>
     </div>
   </div>
 );
