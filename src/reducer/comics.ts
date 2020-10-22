@@ -1,6 +1,12 @@
 /* eslint-disable no-case-declarations */
 import {
-  ComicsActionTypes, ComicsState, FETCH_COMICS, PAGINATE_COMICS, PUT_COMICS, RESET_COMICS,
+  ComicsActionTypes,
+  ComicsState,
+  FETCH_COMICS,
+  PAGINATE_COMICS,
+  PUT_COMICS,
+  PUT_ERROR,
+  RESET_COMICS,
 } from '../store/comics/types';
 
 const initialState: ComicsState = {
@@ -15,6 +21,7 @@ const initialState: ComicsState = {
   query: {
     characters: '',
   },
+  errorCode: 0,
 };
 
 const comics = (state: ComicsState = initialState, action: ComicsActionTypes) => {
@@ -57,6 +64,12 @@ const comics = (state: ComicsState = initialState, action: ComicsActionTypes) =>
           limit: action.limit,
           offset: action.offset,
         },
+      };
+
+    case PUT_ERROR:
+      return {
+        ...state,
+        errorCode: action.errorCode,
       };
     default:
       return state;

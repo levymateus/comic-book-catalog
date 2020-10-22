@@ -38,11 +38,6 @@ interface Props extends Omit<HTMLAttributes<HTMLInputElement>, 'onChange'> {
    * An optional callback prop fired when select an dropdown option is selected.
    */
   onSelectItem?: (item: unknown) => void;
-
-  /**
-   * An optional `children` as ReactNode or render prop function passing the filtered suggestions.
-   */
-  children?: ((suggestions: unknown[]) => React.ReactNode) | React.ReactNode;
 }
 
 type ListAction = {
@@ -89,36 +84,28 @@ const Suggester: React.FC<Props> = ({
   const render = useCallback(renderItem, []);
   const select = useCallback(onSelectItem, []);
 
+  const filterBy = useCallback((value: string): void => {
+    setSuggestions([
+      ...list.filter((item) => render(item)
+        .toLocaleLowerCase().startsWith(value.toLocaleLowerCase())),
+    ]);
+  }, [render, list]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const { value } = event.target;
     setSearch(value);
     onChange(value).then(putValues).catch(onError);
-    if (value.length > 0) {
-      setSuggestions([
-        ...list.filter((item) => render(item)
-          .toLocaleLowerCase().startsWith(value.toLocaleLowerCase())),
-      ]);
-    }
+    filterBy(value);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent): void => {
     if (event.key === 'Enter') {
       setDropdownIsOpen(false);
+      if (inputRef.current) {
+        inputRef.current.blur();
+      }
     }
   };
-
-  useEffect(() => {
-    if (list.length) {
-      setDropdownIsOpen(true);
-      setSuggestions([
-        ...list.filter((item) => render(item)
-          .toLocaleLowerCase()
-          .startsWith(search.toLocaleLowerCase())),
-      ]);
-    } else {
-      setDropdownIsOpen(false);
-    }
-  }, [list, render, search]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -127,8 +114,6 @@ const Suggester: React.FC<Props> = ({
         && dropdownRef.current
         && !dropdownRef.current.contains(event.target)) {
         setDropdownIsOpen(false);
-      } else {
-        setDropdownIsOpen(true);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -136,6 +121,15 @@ const Suggester: React.FC<Props> = ({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [inputRef, dropdownRef]);
+
+  useEffect(() => {
+    if (list.length) {
+      filterBy(search);
+      setDropdownIsOpen(true);
+    } else {
+      setDropdownIsOpen(false);
+    }
+  }, [list, filterBy, setDropdownIsOpen]);
 
   return (
     <>
@@ -149,23 +143,18 @@ const Suggester: React.FC<Props> = ({
             inputRef.current.setSelectionRange(0, search.length);
           }
           setDropdownIsOpen(true);
-          setSuggestions([
-            ...list.filter((item) => render(item)
-              .toLocaleLowerCase()
-              .startsWith(search.toLocaleLowerCase())),
-          ]);
+          filterBy(search);
         }}
         value={search}
         ref={inputRef}
       />
-      {!children ? (
-        <div ref={dropdownRef} className={`suggester-dropdown ${dropdownIsOpen ? 'visible' : 'invisible'}`}>
-          <ul className="list-group">
-            {loading ? <li className="list-group-item">loading...</li> : null}
-            {!loading && suggestions.map((item: any) => (
-              <li key={item.id} className="list-group-item">
+      <div ref={dropdownRef} className={`suggester-dropdown-container ${dropdownIsOpen ? 'visible' : 'invisible'}`}>
+        {suggestions.length ? (
+          <ul className="suggester-dropdown-list">
+            {!loading ? suggestions.map((item: any) => (
+              <li key={item.id} className="suggester-dropdown-item">
                 <button
-                  className="btn btn-link"
+                  className=""
                   type="button"
                   onClick={(e) => {
                     e.preventDefault();
@@ -176,17 +165,29 @@ const Suggester: React.FC<Props> = ({
                     setSearch(render(item));
                   }}
                 >
-                  {render(item)}
+                  <div className="thumbnail-image">
+                    <img alt={render(item)} src={`${item.thumbnail.path}/standard_medium.${item.thumbnail.extension}`} />
+                  </div>
+                  <div className="thumbnail-content">
+                    <h4>{render(item)}</h4>
+                    <h5>{item.description}</h5>
+                  </div>
                 </button>
               </li>
-            ))}
-            {!loading && !suggestions.length && search.length ? <li className="list-group-item">Nothing found</li> : null}
+            )) : null}
           </ul>
-        </div>
-      ) : null}
-      {typeof children === 'function'
-        && dropdownIsOpen
-        ? children(suggestions) : null}
+        ) : null}
+      </div>
+      <div className={`suggester-dropdown-container ${loading ? 'visible' : 'invisible'}`}>
+        <ul className="suggester-dropdown-list">
+          <li className="suggester-dropdown-item">Loading...</li>
+        </ul>
+      </div>
+      <div className={`suggester-dropdown-container ${!loading && !suggestions.length && search && dropdownIsOpen ? 'visible' : 'invisible'}`}>
+        <ul className="suggester-dropdown-list">
+          <li className="suggester-dropdown-item">No results</li>
+        </ul>
+      </div>
     </>
   );
 };

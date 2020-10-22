@@ -3,6 +3,7 @@ export const FETCH_COMICS = 'FETCH_COMICS';
 export const PUT_COMICS = 'PUT_COMICS';
 export const PAGINATE_COMICS = 'PAGINATE_COMICS';
 export const RESET_COMICS = 'RESET_COMICS';
+export const PUT_ERROR = 'PUT_ERROR';
 
 export interface Comic {
   id: number;
@@ -21,6 +22,11 @@ export interface ComicsState {
   query: {
     characters: string,
   };
+
+  /**
+   * 0 - no error; -1 - default error; > 0 - The HTTP error codes
+   */
+  errorCode: number;
 }
 
 export interface Query {
@@ -36,6 +42,11 @@ export interface Paginate {
   type: typeof PAGINATE_COMICS;
   limit: number;
   offset: number;
+}
+
+export interface PutError {
+  type: typeof PUT_ERROR;
+  errorCode: number;
 }
 
 interface FetchComics {
@@ -58,4 +69,4 @@ interface ResetComics {
   type: typeof RESET_COMICS;
 }
 
-export type ComicsActionTypes = FetchComics | PutComics | Paginate | ResetComics;
+export type ComicsActionTypes = FetchComics | PutComics | Paginate | ResetComics | PutError;

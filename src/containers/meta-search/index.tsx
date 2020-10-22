@@ -36,13 +36,16 @@ const MetaSearchData: React.FC = () => {
   const {
     page, pages, total, count, isLoading,
   } = useSelector<any, ResultSet>(select);
-  return (
-    <div id="search-meta-result" className={`d-flex justify-content-left p-3 ${isLoading ? 'invisible' : 'visible'}`}>
-      <span>
-        {(page * count) - count} - {page * count} of {total} results ({pages} pages)
-      </span>
-    </div>
-  );
+  if (count > 1) {
+    return (
+      <div id="search-meta-result" className={`d-flex justify-content-left p-3 ${isLoading ? 'invisible' : 'visible'}`}>
+        <span>
+          {(page * count) - count} - {page * count} of {total} results ({pages} pages)
+        </span>
+      </div>
+    );
+  }
+  return null;
 };
 
 export default MetaSearchData;
