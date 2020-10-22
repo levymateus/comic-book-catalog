@@ -10,7 +10,8 @@ import { fetchComics, paginateComics } from '../../store/comics/actions';
 import rootStore from '../../store';
 
 import './index.css';
-import NotFound from '../../components/not-found';
+import Error from '../error';
+import { NotFound } from '../../components/not-found';
 
 type ResultSet = {
   grid: any[][],
@@ -70,6 +71,7 @@ const Comics: React.FC = () => {
   const {
     page, grid, pages, isLoading, count,
   } = useSelector<any, ResultSet>(select);
+  const errorCode = useSelector<any, number>((store) => store.comics.errorCode);
   const [selectedPage, setSelectedPage] = useState(0);
   const history = useHistory();
 
@@ -95,6 +97,10 @@ const Comics: React.FC = () => {
   }, [dispatch, characters]);
 
   useEffect(() => { setSelectedPage(page); }, [page]);
+
+  if (errorCode) {
+    return <Error errorCode={errorCode} />;
+  }
 
   return (
     <div className={`${isLoading || count <= 1 ? 'grid wrap' : 'grid'}`}>

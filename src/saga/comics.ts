@@ -3,6 +3,7 @@ import compact from 'compact-object';
 import { FETCH_COMICS, PUT_COMICS } from '../store/comics/types';
 
 import * as API from '../api';
+import { putError } from '../store/comics/actions';
 
 function* fetchComics(action: any): Generator<unknown, any, any> {
   try {
@@ -11,7 +12,6 @@ function* fetchComics(action: any): Generator<unknown, any, any> {
       formatType: 'comic',
     });
     if (response.code === 200) {
-      console.log(response);
       yield put({
         type: PUT_COMICS,
         meta: {
@@ -22,10 +22,15 @@ function* fetchComics(action: any): Generator<unknown, any, any> {
         },
         comics: response.data.results,
       });
+      yield put(putError(0));
     }
   } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error(error);
+    if (error.message === 'Request failed with status code 409') {
+      yield put(putError(409));
+    } else {
+      // unknown error: show an default error message
+      yield put(putError(-1));
+    }
   }
 }
 
