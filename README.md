@@ -12,6 +12,7 @@ The folder structure of this project follows:
 	    |── reducer         # The handle redux actions an handle store data.
 	    |── saga            # The async call to populate the store data.
 	    |── store           # The actions and store stypes.
+        |── test            # The test suits. Run `yarn test`.
 	...
 	└── README.md
 
