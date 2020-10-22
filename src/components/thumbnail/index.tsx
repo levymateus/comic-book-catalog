@@ -33,10 +33,10 @@ const Thumbnail: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   const creatorsText = useCallback(() => {
-    if (creators.length > 3) {
+    if (creators.length > 1) {
       return (
         <div className="tumbnail-comic-creator">
-          {`${creators.map((creator) => creator.name).slice(0, 3).join(', ')} and more`}
+          {`${creators.map((creator) => creator.name).slice(0, 1).join(', ')} and more`}
         </div>
       );
     }
@@ -51,16 +51,18 @@ const Thumbnail: React.FC<Props> = ({
     <div className="thumbnail">
       <div className="thumbnail-container ">
         <img
-          // eslint-disable-next-line react/jsx-props-no-spreading
+            // eslint-disable-next-line react/jsx-props-no-spreading
           {...rest}
           onLoad={() => setIsLoading(false)}
           src={`${url}/${variant}.${extension}`}
           alt={alt}
           className={`img-thumbnail ${isLoading ? 'invisible' : 'visible'}`}
         />
-        <div className={`spinner-border ${isLoading ? 'visible' : 'invisible'}`} role="status">
+        {isLoading && (
+        <div className="spinner-border position-absolute" role="status">
           <span className="sr-only">Loading...</span>
         </div>
+        )}
       </div>
       <div className="thumbnail-title">{title}</div>
       {creatorsText()}
