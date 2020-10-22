@@ -27,6 +27,8 @@ function* fetchComics(action: any): Generator<unknown, any, any> {
   } catch (error) {
     if (error.message === 'Request failed with status code 409') {
       yield put(putError(409));
+    } else if (error.code === 'ECONNABORTED') {
+      yield put(putError(1));
     } else {
       // unknown error: show an default error message
       yield put(putError(-1));

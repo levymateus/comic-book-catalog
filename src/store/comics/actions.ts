@@ -1,5 +1,5 @@
 import {
-  ComicsActionTypes, Query, FETCH_COMICS, PAGINATE_COMICS, RESET_COMICS, PUT_ERROR,
+  ComicsActionTypes, Query, FETCH_COMICS, PAGINATE_COMICS, RESET_COMICS, PUT_ERROR, ComicsState,
 } from './types';
 
 export function fetchComics(query: Query): ComicsActionTypes {
@@ -22,7 +22,11 @@ export function resetComics(): ComicsActionTypes {
   };
 }
 
-export function putError(errorCode: number): ComicsActionTypes {
+/**
+ * Put an error code in the store.
+ * @param errorCode - the error code
+ */
+export function putError(errorCode: ComicsState['errorCode']): ComicsActionTypes {
   return {
     type: PUT_ERROR,
     errorCode,
