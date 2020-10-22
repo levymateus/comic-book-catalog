@@ -1,0 +1,22 @@
+.grid {
+	padding: 16px;
+	align-items: center;
+}
+
+.wrap-grid {
+	width: 100%;
+	height: calc(100% - 56px);
+	display: flex;
+	justify-content: center;
+}
+
+.footer {
+	padding-top: 16px;
+	background-color: white;
+}
+
+.data-provided {
+	position: absolute;
+	left: 16px;
+	padding: 8px;
+}

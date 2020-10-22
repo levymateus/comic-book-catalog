@@ -1,26 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import './index.css';
+import './app.css';
+import { Redirect } from 'react-router';
+import TopNavbar from './containers/top-navbar';
+import Comics from './containers/comics';
+import MetaSearchData from './containers/meta-search';
+import Comic from './containers/comic';
+
+const App: React.FC = () => (
+  <div className="app container-fluid">
+    <BrowserRouter basename="/">
+      <TopNavbar />
+      <Switch>
+        <Route exact path="/comics">
+          <MetaSearchData />
+          <Comics />
+        </Route>
+        <Route exact path="/comics/:characters">
+          <MetaSearchData />
+          <Comics />
+        </Route>
+        <Route exact path="/comic/:id">
+          <Comic />
+        </Route>
+        <Redirect from="/" exact to="/comics" />
+      </Switch>
+    </BrowserRouter>
+  </div>
+);
 
 export default App;

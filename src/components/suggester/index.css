@@ -1,0 +1,16 @@
+.visible {
+	visibility: visible;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.suggester-dropdown {
+	position: absolute;
+	top: 42px;
+	width: 100%;
+	z-index: 99;
+	height: 320px;
+	overflow: auto;
+}
