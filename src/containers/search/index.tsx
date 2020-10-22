@@ -1,4 +1,5 @@
 import React, { HTMLAttributes, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import { SearchIcon } from '../../components/icons';
 
@@ -6,6 +7,7 @@ import './index.css';
 
 import Suggester from '../../components/suggester';
 import { fetchCharacter } from '../../api';
+import { putError } from '../../store/comics/actions';
 
 interface Props extends HTMLAttributes<HTMLElement>{
   // eslint-disable-next-line no-unused-vars
@@ -19,6 +21,7 @@ const Search: React.FC<Props> = ({ handleSubmit, className }) => {
   const [search, setSeach] = useState('');
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <form
@@ -35,7 +38,9 @@ const Search: React.FC<Props> = ({ handleSubmit, className }) => {
           onSelectItem={(item: any) => {
             history.replace(`/comics/${item.id}`);
           }}
-          onError={(error): void => console.error(error)}
+          onError={(): void => {
+            dispatch(putError(-1));
+          }}
           className="form-control"
           placeholder="Search by character name"
           aria-label="Search"
