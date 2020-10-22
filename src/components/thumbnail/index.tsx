@@ -9,8 +9,19 @@ interface Creator {
 }
 
 interface Props extends HTMLAttributes<HTMLImageElement> {
+  /**
+   * The thumbnail title text.
+   */
   title: string;
+
+  /**
+   * The thumbnail image url.
+   */
   url: string;
+
+  /**
+   * The `alt` text of the thumbnail image.
+    */
   alt: string;
 
   /**
@@ -23,7 +34,15 @@ interface Props extends HTMLAttributes<HTMLImageElement> {
     * 216x324px (portrait_incredible)
    */
   variant: 'portrait_small' | 'portrait_medium' | 'portrait_xlarge' | 'portrait_fantastic' | 'portrait_uncanny' | 'portrait_incredible';
+
+  /**
+   * The image extension.
+   */
   extension: string;
+
+  /**
+   * An list of comic creators.
+   */
   creators: Creator[];
 }
 
@@ -33,10 +52,10 @@ const Thumbnail: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(true);
 
   const creatorsText = useCallback(() => {
-    if (creators.length > 1) {
+    if (creators.length > 3) {
       return (
         <div className="tumbnail-comic-creator">
-          {`${creators.map((creator) => creator.name).slice(0, 1).join(', ')} and more`}
+          {`${creators.map((creator) => creator.name).slice(0, 3).join(', ')} and more`}
         </div>
       );
     }

@@ -56,6 +56,9 @@ const Characters = (comic: any): React.ReactNode | null => {
   return null;
 };
 
+/**
+ * This container comic component render the details of an fetched comic.
+ */
 const Comic: React.FC = () => {
   const [comic, setComic] = useState<any>();
   const { id } = useParams<Params>();

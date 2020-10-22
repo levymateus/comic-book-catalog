@@ -12,6 +12,9 @@ interface Props extends HTMLAttributes<HTMLElement>{
   handleSubmit?: (searchValue: string) => void
 }
 
+/**
+ * This container search component containt the search logic of the application.
+ */
 const Search: React.FC<Props> = ({ handleSubmit, className }) => {
   const [search, setSeach] = useState('');
   const history = useHistory();

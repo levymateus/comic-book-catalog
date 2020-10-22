@@ -6,8 +6,19 @@ import React, {
 import './index.css';
 
 interface Props extends Omit<HTMLAttributes<HTMLElement>, 'onChange'> {
+  /**
+   * The current selected page.
+   */
   page: number;
+
+  /**
+   * Total number of pages.
+   */
   pages: number;
+
+  /**
+   * Callback fired on select on select page or next/prev page.
+   */
   onChange: (page: number) => void;
 }
 

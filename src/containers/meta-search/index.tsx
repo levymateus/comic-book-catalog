@@ -29,6 +29,9 @@ const select = (store: any): ResultSet => {
   };
 };
 
+/**
+ * This container component renders the meta data of the searched/fetched data.
+ */
 const MetaSearchData: React.FC = () => {
   const {
     page, pages, total, count, isLoading,

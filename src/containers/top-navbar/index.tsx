@@ -7,6 +7,9 @@ import Navbar from '../../components/navbar';
 import Search from '../search';
 import { resetComics } from '../../store/comics/actions';
 
+/**
+ * This container top-navbar component handle the navbar logic.
+ */
 const TopNavbar: React.FC = () => {
   const dispatch = useDispatch();
   const history = useHistory();

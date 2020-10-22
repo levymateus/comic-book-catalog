@@ -61,6 +61,9 @@ const select = (store: any): ResultSet => {
   };
 };
 
+/**
+ * This container component only renders a grid of fetched and storef comics.
+ */
 const Comics: React.FC = () => {
   const { characters } = useParams<{ characters: string }>();
   const dispatch = useDispatch();
