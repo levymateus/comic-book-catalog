@@ -29,6 +29,7 @@ export interface Query {
   characters?: string;
   dateRange?: string;
   comicId?: string;
+  nameStartsWith?: string;
 }
 
 export interface Paginate {

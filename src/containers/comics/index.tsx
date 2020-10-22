@@ -10,6 +10,7 @@ import { fetchComics, paginateComics } from '../../store/comics/actions';
 import rootStore from '../../store';
 
 import './index.css';
+import NotFound from '../../components/not-found';
 
 type ResultSet = {
   grid: any[][],
@@ -64,7 +65,7 @@ const Comics: React.FC = () => {
   const { characters } = useParams<{ characters: string }>();
   const dispatch = useDispatch();
   const {
-    page, grid, pages, isLoading,
+    page, grid, pages, isLoading, count,
   } = useSelector<any, ResultSet>(select);
   const [selectedPage, setSelectedPage] = useState(0);
   const history = useHistory();
@@ -93,9 +94,11 @@ const Comics: React.FC = () => {
   useEffect(() => { setSelectedPage(page); }, [page]);
 
   return (
-    <div className={`${isLoading ? 'grid wrap' : 'grid'}`}>
+    <div className={`${isLoading || count <= 1 ? 'grid wrap' : 'grid'}`}>
 
-      {isLoading === false ? grid.map((row, index) => (
+      {!isLoading && count <= 1 && (<NotFound />)}
+
+      {isLoading === false && count > 1 ? grid.map((row, index) => (
         <div key={`row-${index.toString()}`} className="row">
           {row.map((col) => (
             <div key={col.id} className="col">
@@ -111,12 +114,14 @@ const Comics: React.FC = () => {
             </div>
           ))}
         </div>
-      )) : (
-        <div className="d-flex justify-content-center">
-          <div className="spinner-grow" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
+      )) : null}
+
+      {isLoading && (
+      <div className="d-flex justify-content-center">
+        <div className="spinner-grow" role="status">
+          <span className="sr-only">Loading...</span>
         </div>
+      </div>
       )}
 
       {pages > 0 && isLoading === false && (

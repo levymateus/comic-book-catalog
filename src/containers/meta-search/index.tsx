@@ -17,7 +17,7 @@ const select = (store: any): ResultSet => {
 
   let pages = 0;
   try {
-    pages = Math.ceil(total / count);
+    pages = Math.ceil(total / (count + 1));
   } catch (error) {
     pages = 0;
   }

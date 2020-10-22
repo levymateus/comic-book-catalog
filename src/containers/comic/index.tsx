@@ -74,7 +74,7 @@ const Comic: React.FC = () => {
         <div className="container comic py-5">
           <div className="row">
             {comic.images.length > 0 ? (
-              <div className="col d-flex align-items-center">
+              <div className="col">
                 <img
                   src={`${comic.images[0].path}.${comic.images[0].extension}`}
                   alt={comic.title}
@@ -95,7 +95,7 @@ const Comic: React.FC = () => {
 
               <div className="row row-cols-2 py-4">
 
-                {comic.creators.items.map((creator) => (
+                {comic.creators.items.slice(0, 4).map((creator) => (
                   <div key={creator.name} className="col py-4">
                     <h4 className="text-capitalize">{creator.role}:</h4>
                     <h5>{creator.name}</h5>
@@ -117,22 +117,7 @@ const Comic: React.FC = () => {
 
             </div>
           </div>
-          <div className="row">
-            <div className="col">
-              <div className="row py-4">
-                <div className="col">
-                  <h6>ISBN: {comic.issn || '?'}</h6>
-                </div>
-                <div className="col">
-                  <h6>Issue Number: {comic.issueNumber || '?'}</h6>
-                </div>
-                <div className="col">
-                  <h6>Pages: {comic.pageCount}</h6>
-                </div>
-              </div>
-            </div>
-            <div className="col" />
-          </div>
+
         </div>
       ) : (
         <div className=" d-flex justify-content-center wrap align-items-center">

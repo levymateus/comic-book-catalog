@@ -1,0 +1,14 @@
+.search-form {
+	width: 50%;
+}
+
+.search-form .search-form-container {
+	width: 100%;
+}
+
+.suggester-dropdown-list {
+	position: absolute;
+	top: 36px;
+	width: 100%;
+	z-index: 99;
+}

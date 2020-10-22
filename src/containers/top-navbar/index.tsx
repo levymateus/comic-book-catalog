@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 
 import { fetchCharacter } from '../../api';
 import Navbar from '../../components/navbar';
-import Search from '../../components/search';
+import Search from '../search';
 import { resetComics } from '../../store/comics/actions';
 
 const TopNavbar: React.FC = () => {

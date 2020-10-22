@@ -11,6 +11,7 @@ function* fetchComics(action: any): Generator<unknown, any, any> {
       formatType: 'comic',
     });
     if (response.code === 200) {
+      console.log(response);
       yield put({
         type: PUT_COMICS,
         meta: {
