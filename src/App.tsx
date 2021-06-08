@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import './index.css';
-import './app.css';
+import './App.css';
 import { Redirect } from 'react-router';
 import TopNavbar from './containers/top-navbar';
 import Comics from './containers/comics';
