@@ -27,8 +27,26 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:local": "react-scripts build&&yarn serve -s build",
+    "commit": "cz"
   },
+  "config": {
+    "commitizen": {
+        "path": "./node_modules/cz-conventional-changelog"
+    }
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged",
+			"pre-push": "yarn test"
+		}
+	},
+	"lint-staged": {
+		"src/**/*.{ts,tsx}": [
+			"yarn lint --fix"
+		]
+	},
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -50,11 +68,14 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router": "^5.1.8",
     "@typescript-eslint/parser": "^4.4.1",
+    "commitizen": "^4.2.4",
     "enzyme-adapter-react-16": "^1.15.5",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.4",
-    "redux-devtools-extension": "^2.13.8"
+    "husky": "^6.0.0",
+    "redux-devtools-extension": "^2.13.8",
+    "serve": "^12.0.0"
   }
 }

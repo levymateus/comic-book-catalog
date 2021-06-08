@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const PUBLIC_KEY = 'd0402bfbae37b86d75a4907d18ca6f05';
-
 const api = axios.create({
-  baseURL: '//gateway.marvel.com',
+  baseURL: process.env.REACT_APP_API_BASE_URL,
   params: {
-    apikey: PUBLIC_KEY,
+    apikey: process.env.REACT_APP_API_PUBLIC_KEY,
   },
   timeout: 15000,
   method: 'get',
